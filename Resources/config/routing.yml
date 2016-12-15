@@ -1,0 +1,4 @@
+check_book_io_homepage:
+    resource: @CheckBookIOBundle/Controller
+    type:     annotation
+    prefix:   /checkbookio

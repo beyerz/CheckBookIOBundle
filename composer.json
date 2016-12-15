@@ -1,0 +1,27 @@
+{
+  "name": "beyerz/check-book-io-bundle",
+  "description": "Symfony support for checkbook.io platform",
+  "type" : "symfony-bundle",
+  "authors" : [{
+    "name" : "Lance Bailey",
+    "homepage" : "http://www.me-vs-php.com"
+  }],
+  "keywords" : [
+    "Internet check payments",
+    "checkbook",
+    "Symfony",
+    "Symfony2"
+  ],
+  "license": "MIT",
+  "require": {
+    "php": "^5.5.9 || ^7.0",
+    "symfony/framework-bundle": "^2.7 || ^3.0",
+    "symfony/security-bundle": "^2.7 || ^3.0",
+    "guzzlehttp/guzzle": "^6.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Beyerz\\CheckBookIOBundle\\": ""
+    }
+  }
+}

@@ -1,0 +1,29 @@
+services:
+  checkbook.gateway.rest:
+    class: Beyerz\CheckBookIOBundle\Gateway\RestGateway
+    arguments: ["@checkbook.client"]
+    calls:
+      - [setContainer,['@service_container']]
+    public: false
+
+  checkbook.check:
+    class: Beyerz\CheckBookIOBundle\Model\Check
+    arguments: ["@checkbook.gateway.rest"]
+    public: false
+
+  checkbook.invoice:
+    class: Beyerz\CheckBookIOBundle\Model\Invoice
+    arguments: ["@checkbook.gateway.rest"]
+    public: false
+
+  checkbook.subscription:
+    class: Beyerz\CheckBookIOBundle\Model\Subscription
+    arguments: ["@checkbook.gateway.rest"]
+    public: false
+
+  checkbook.model:
+    class: Beyerz\CheckBookIOBundle\Model\CheckbookIO
+    arguments:
+      - "@checkbook.check"
+      - "@checkbook.invoice"
+      - "@checkbook.subscription"
