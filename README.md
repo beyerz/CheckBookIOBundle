@@ -2,7 +2,12 @@
 The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.checkbook.io/) API.
 
 # Documentation
-Using the bundle is extremely simple... nuff said
+Using the bundle is extremely simple...
+anywhere that has access to container and services
+```php
+$checkBook = $this->getContainer()->get('checkbook.model');
+```
+Boom!! You now have a facade to access all the Checkbook API Endpoints.
 
 # Config
 config.yml
