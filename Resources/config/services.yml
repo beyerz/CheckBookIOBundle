@@ -7,17 +7,17 @@ services:
     public: false
 
   checkbook.check:
-    class: Beyerz\CheckBookIOBundle\Model\Check
+    class: Beyerz\CheckBookIOBundle\Model\Check\Check
     arguments: ["@checkbook.gateway.rest"]
     public: false
 
   checkbook.invoice:
-    class: Beyerz\CheckBookIOBundle\Model\Invoice
+    class: Beyerz\CheckBookIOBundle\Model\Invoice\Invoice
     arguments: ["@checkbook.gateway.rest"]
     public: false
 
   checkbook.subscription:
-    class: Beyerz\CheckBookIOBundle\Model\Subscription
+    class: Beyerz\CheckBookIOBundle\Model\Subscription\Subscription
     arguments: ["@checkbook.gateway.rest"]
     public: false
 

@@ -6,12 +6,14 @@
  * Time: 18:05
  */
 
-namespace Beyerz\CheckBookIOBundle\Model;
+namespace Beyerz\CheckBookIOBundle\Model\Invoice;
 
 
+use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Request as CreateRequest;
+use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Response as CreateResponse;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
 
-class Subscription
+class Invoice
 {
     /**
      * @var RestGateway
@@ -28,9 +30,10 @@ class Subscription
     }
 
     /**
+     * @param CreateRequest $request
      * @return CreateResponse
      */
-    public function create(){
+    public function create(CreateRequest $request){
 
     }
 
@@ -39,7 +42,7 @@ class Subscription
     }
 
     public function listAll(){
-        $response = $this->gateway->get('/v2/subscription');
+        $response = $this->gateway->get('/v2/invoice');
         var_dump($response);die;
         $list = [];
         foreach ($response['checks'] as $checkArray) {

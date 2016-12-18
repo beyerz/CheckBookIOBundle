@@ -11,8 +11,6 @@ namespace Beyerz\CheckBookIOBundle\Entity;
 
 class Check
 {
-
-
     /**
      * @var string
      */
@@ -26,7 +24,7 @@ class Check
     /**
      * @var integer
      */
-    private $check_num;
+    private $checkNum;
 
     /**
      * @var string
@@ -70,14 +68,14 @@ class Check
     public function __construct(array $options)
     {
         $this->setId($options['id'])
-            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u',$options['date']))
+            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $options['date']))
             ->setCheckNum($options['check_num'])
             ->setDescription($options['description'])
             ->setStatus($options['status'])
             ->setAmount($options['amount'])
-            ->setToken(isset($options['token'])?$options['token']:null)
-            ->setPaid(isset($options['paid'])?$options['paid']:null)
-            ->setAddress($options['address'])
+            ->setToken(isset($options['token']) ? $options['token'] : null)
+            ->setPaid(isset($options['paid']) ? $options['paid'] : null)
+            ->setAddress(isset($options['address']) ? $options['address'] : null)
             ->setName($options['name']);
     }
 
@@ -122,16 +120,16 @@ class Check
      */
     public function getCheckNum()
     {
-        return $this->check_num;
+        return $this->checkNum;
     }
 
     /**
-     * @param int $check_num
+     * @param int $checkNum
      * @return Check
      */
-    public function setCheckNum($check_num)
+    public function setCheckNum($checkNum)
     {
-        $this->check_num = $check_num;
+        $this->checkNum = $checkNum;
         return $this;
     }
 
@@ -259,5 +257,21 @@ class Check
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function serialize()
+    {
+        return [
+            'id' =>             $this->getId(),
+            'date' =>           $this->getDate()->format('Y-m-d H:i:s'),
+            'checkNum' =>       $this->getCheckNum(),
+            'description' =>    $this->getDescription(),
+            'status' =>         $this->getStatus(),
+            'amount' =>         $this->getAmount(),
+            'token' =>          $this->getToken(),
+            'paid' =>           $this->getPaid(),
+            'address' =>        $this->getAddress(),
+            'name' =>           $this->getName(),
+        ];
     }
 }

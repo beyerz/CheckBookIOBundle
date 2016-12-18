@@ -9,9 +9,9 @@
 namespace Beyerz\CheckBookIOBundle\Model;
 
 
-use Beyerz\CheckBookIOBundle\Model\Check;
-use Beyerz\CheckBookIOBundle\Model\Invoice;
-use Beyerz\CheckBookIOBundle\Model\Subscription;
+use Beyerz\CheckBookIOBundle\Model\Check\Check;
+use Beyerz\CheckBookIOBundle\Model\Invoice\Invoice;
+use Beyerz\CheckBookIOBundle\Model\Subscription\Subscription;
 
 class CheckbookIO
 {

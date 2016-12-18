@@ -16,15 +16,16 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class CheckListCommand extends ContainerAwareCommand
+class CheckDetailsCommand extends ContainerAwareCommand
 {
 
     protected function configure()
     {
-        $this->setName('checkbook:check:list')
-            ->setDescription("List your checks")
+        $this->setName('checkbook:check:details')
+            ->setDescription("Get the details of an existing check")
+            ->addArgument('id', InputOption::VALUE_REQUIRED, 'Check Id')
             ->setHelp(<<<'EOF'
-            The <info>%command.name%</info> command is used list all the checks under you account
+            The <info>%command.name%</info> command is used to get the details of an existing check
 EOF
             );
     }
@@ -32,19 +33,12 @@ EOF
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title("Checks Listing");
+        $io->title("Check Details");
         $checkBook = $this->getContainer()->get('checkbook.model');
-        $list = $checkBook->check()->listAll();
+        $check = $checkBook->check()->details($input->getArgument('id'));
 
-        $headers = [];
-        $serialized = [];
-        /** @var Check $ch */
-        foreach($list as $ch){
-            $serialized[] = $ch->serialize();
-            if(empty($headers)){
-                $headers = array_keys($ch->serialize());
-            }
-        }
-        $io->table($headers, $serialized);
+        $headers = array_keys($check->serialize());
+        $serialized = $check->serialize();
+        $io->table($headers, [$serialized]);
     }
 }

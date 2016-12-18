@@ -45,4 +45,8 @@ class Gateway
             ]
         ];
     }
+
+    protected function body(\JsonSerializable $entity){
+        return ['body' => json_encode($entity)];
+    }
 }

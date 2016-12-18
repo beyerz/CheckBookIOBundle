@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
     const NODE_PUBLIC_KEY = 'publishable_key';
     const NODE_PRIVATE_KEY = 'secret_key';
     const NODE_SANDBOX_MODE = 'sandbox';
+    const NODE_DEBUG_MODE = 'debug';
 
     /**
      * {@inheritdoc}
@@ -30,6 +31,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode(self::NODE_PUBLIC_KEY)->end()
                 ->scalarNode(self::NODE_PRIVATE_KEY)->end()
                 ->booleanNode(self::NODE_SANDBOX_MODE)->defaultTrue()->end()
+                ->booleanNode(self::NODE_DEBUG_MODE)->defaultTrue()->end()
             ->end();
 
         return $treeBuilder;

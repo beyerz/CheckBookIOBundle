@@ -48,7 +48,7 @@ class CheckBookIOExtension extends Extension
         // Don't expose this to the public container
         $client->setPublic(false);
         // Add Guzzle Config
-        $client->addArgument($this->buildGuzzleConfig($config['sandbox']));
+        $client->addArgument($this->buildGuzzleConfig($config[Configuration::NODE_SANDBOX_MODE], $config[Configuration::NODE_DEBUG_MODE]));
         // How we get the service
         $clientServiceName = 'checkbook.client';
         // add the client definition to the container
@@ -57,13 +57,14 @@ class CheckBookIOExtension extends Extension
 
     /**
      * @param $sandbox boolean
+     * @param $debug boolean
      * @return array
      */
-    public function buildGuzzleConfig($sandbox)
+    public function buildGuzzleConfig($sandbox, $debug)
     {
         $config = [
             'base_uri' => $sandbox?'https://sandbox.checkbook.io':'https://checkbook.io',
-            'debug' => $sandbox,
+            'debug' => $debug,
             'headers' => [
                 'Accept' => "application/json",
                 'Content-Type' => "application/json",

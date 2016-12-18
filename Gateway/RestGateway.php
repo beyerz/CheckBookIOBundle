@@ -9,26 +9,39 @@
 namespace Beyerz\CheckBookIOBundle\Gateway;
 
 use GuzzleHttp\Exception\ClientException;
+use \GuzzleHttp\Psr7\Response as Psr7Response;
 
 class RestGateway extends Gateway
 {
 
-    final public function post($uri)
+    /**
+     * @param string $uri
+     * @param \JsonSerializable $entity
+     * @return Response
+     */
+    final public function post($uri, \JsonSerializable $entity)
     {
-        $response = $this->client->request('POST', $uri, $this->authorizationHeader('GET', 'v2/check'));
-        var_dump($response->getHeaders());
-        echo $response->getStatusCode();
+        try {
+            $httpResponse = $this->client->request('POST', $uri, array_merge($this->authorizationHeader('POST', $uri),$this->body($entity)));
+        } catch (ClientException $e) {
+            throw $e;
+        }
+        return $this->buildResponse($httpResponse);
     }
 
+    /**
+     * @param $uri
+     * @return Response
+     */
     final function get($uri)
     {
         try {
-            $response = $this->client->request('GET', $uri, $this->authorizationHeader('GET', $uri));
+            $httpResponse = $this->client->request('GET', $uri, $this->authorizationHeader('GET', $uri));
         } catch (ClientException $e) {
-            $e->getRequest()->getHeaders();
             throw $e;
         }
-        return json_decode($response->getBody()->getContents(), true);
+
+        return $this->buildResponse($httpResponse);
     }
 
     final function update()
@@ -39,5 +52,17 @@ class RestGateway extends Gateway
     final function delete()
     {
 
+    }
+
+    /**
+     * @param Psr7Response $httpResponse
+     * @return Response
+     */
+    private function buildResponse(Psr7Response $httpResponse){
+        $response = new Response();
+        $response->setHeaders($httpResponse->getHeaders())
+            ->addHeader('Status-Code',$httpResponse->getStatusCode())
+            ->setBody(json_decode($httpResponse->getBody()->getContents(), true));
+        return $response;
     }
 }

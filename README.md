@@ -16,6 +16,7 @@ check_book_io:
     publishable_key:  "%checkbook_publishable_key%"       # public_key
     secret_key:       "%checkbook_secret_key%"            # private_key
     sandbox:          "%checkbook_sandbox%"               # use sandbox mode
+    debug:            "%checkbook_debug%"                 # use debug mode
 ```
 ## Installation
 ### Composer
