@@ -12,7 +12,6 @@ env:
 before_script:
   - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer require symfony/http-foundation:${SYMFONY_VERSION}
-  - composer update -o
 
 script: phpunit --coverage-text
 
