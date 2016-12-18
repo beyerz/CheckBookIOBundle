@@ -14,17 +14,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $checkbookModel = $this->container->get('checkbook.model');
-        $createRequest = new CreateRequest();
-        $createRequest->setAmount(123)
-//            ->setAttachment()
-            ->setBusiness('acme')
-            ->setDescription('just a joke')
-            ->setEmail('peleg@lenderly.co')
-            ->setFirstName('Peleg')
-            ->setLastName('Bar Natan');
-        $checkbookModel->invoice()->create($createRequest);
-
         return $this->render('CheckBookIOBundle:Default:index.html.twig');
     }
 }

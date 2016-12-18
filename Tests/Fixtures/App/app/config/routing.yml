@@ -1,0 +1,2 @@
+check_book_io:
+    resource: "@CheckBookIOBundle/Resources/config/routing.yml"
