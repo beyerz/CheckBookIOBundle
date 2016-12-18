@@ -1,22 +1,18 @@
 language: php
 
 php:
-  - 5.3
-  - 5.4
   - 5.5
   - 5.6
   - 7.0
 
 env:
-  - SYMFONY_VERSION=2.0.*
-  - SYMFONY_VERSION=2.1.*
-  - SYMFONY_VERSION=2.2.*
-  - SYMFONY_VERSION=2.3.*
   - SYMFONY_VERSION=2.8.*
   - SYMFONY_VERSION=dev-master
 
 before_script:
+  - echo "memory_limit=1024M" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
   - composer require symfony/http-foundation:${SYMFONY_VERSION}
+  - composer update -o
 
 script: phpunit --coverage-text
 

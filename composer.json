@@ -14,9 +14,6 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^5.5.9 || ^7.0",
-    "symfony/framework-bundle": "^2.7 || ^3.0",
-    "symfony/security-bundle": "^2.7 || ^3.0",
     "guzzlehttp/guzzle": "^6.2"
   },
   "autoload": {
