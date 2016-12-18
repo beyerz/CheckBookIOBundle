@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/beyerz/CheckBookIOBundle.svg?branch=master)](https://travis-ci.org/beyerz/CheckBookIOBundle)
 # CheckBookIOBundle
 The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.checkbook.io/) API.
 
