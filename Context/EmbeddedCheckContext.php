@@ -19,6 +19,16 @@ class EmbeddedCheckContext
     /**
      * @var string
      */
+    private $name = null;
+
+    /**
+     * @var string
+     */
+    private $for;
+
+    /**
+     * @var string
+     */
     private $description;
 
     /**
@@ -61,6 +71,42 @@ class EmbeddedCheckContext
     public function setAmount($amount)
     {
         $this->amount = $amount;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return EmbeddedCheckContext
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFor()
+    {
+        return $this->for;
+    }
+
+    /**
+     * @param string $for
+     * @return EmbeddedCheckContext
+     */
+    public function setFor($for)
+    {
+        $this->for = $for;
         return $this;
     }
 
