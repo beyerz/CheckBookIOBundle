@@ -10,6 +10,13 @@ $checkBook = $this->getContainer()->get('checkbook.model');
 ```
 Boom!! You now have a facade to access all the Checkbook API Endpoints.
 
+### Bonus Feature
+Embedded form check
+
+To use the embeded form check you should populate the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext``` and pass it to your twig template.
+Then use ```{{ embedded_check(context) }}``` where context is the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext```
+This will automatically generate the checkbook button.
+
 # Config
 config.yml
 ```yaml
