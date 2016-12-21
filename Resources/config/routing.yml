@@ -1,4 +1,3 @@
 check_book_io_homepage:
-    resource: @CheckBookIOBundle/Controller
-    type:     annotation
-    prefix:   /checkbookio
+    path:     /checkbookio/
+    defaults: { _controller: CheckBookIOBundle:Default:index}
