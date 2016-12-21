@@ -56,9 +56,9 @@ class EmbeddedCheckExtension extends \Twig_Extension
         $form .= '<input type="hidden" id="checkbook_var"';
         $form .= 'data-key="'.$this->publicKey.'"';
         $form .= 'data-amount="'.$context->getAmount().'"';
-        $form .= 'data-name="'.is_null($context->getName())?$this->merchantName:$context->getName().'"';
+        $form .= 'data-name="'.htmlentities(is_null($context->getName())?$this->merchantName:$context->getName()).'"';
         $form .= 'data-for="'.$context->getFor().'"';
-        $form .= 'data-description="'.$context->getDescription().'"';
+        $form .= 'data-description="'.htmlentities($context->getDescription()).'"';
         $form .= 'data-user-email ="'.$context->getUserEmail().'"';
         $form .= 'data-redirect-url ="'.$context->getRedirectUrl().'"';
         $form .= 'data-businessName ="'.$context->getBusinessName().'"';
