@@ -15,6 +15,7 @@ class Configuration implements ConfigurationInterface
     const NODE_ROOT = 'check_book_io';
     const NODE_PUBLIC_KEY = 'publishable_key';
     const NODE_PRIVATE_KEY = 'secret_key';
+    const NODE_MERCHANT_NAME = 'merchant_name';
     const NODE_SANDBOX_MODE = 'sandbox';
     const NODE_DEBUG_MODE = 'debug';
 
@@ -30,6 +31,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode(self::NODE_PUBLIC_KEY)->end()
                 ->scalarNode(self::NODE_PRIVATE_KEY)->end()
+                ->scalarNode(self::NODE_MERCHANT_NAME)->end()
                 ->booleanNode(self::NODE_SANDBOX_MODE)->defaultTrue()->end()
                 ->booleanNode(self::NODE_DEBUG_MODE)->defaultTrue()->end()
             ->end();

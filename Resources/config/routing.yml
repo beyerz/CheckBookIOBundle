@@ -1,3 +1,6 @@
 check_book_io_homepage:
     path:     /checkbookio/
     defaults: { _controller: CheckBookIOBundle:Default:index}
+check_book_io_embed:
+    path:     /checkbookio/embed-check
+    defaults: { _controller: CheckBookIOBundle:EmbedCheck:index}

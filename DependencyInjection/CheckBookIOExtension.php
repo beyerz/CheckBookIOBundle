@@ -33,6 +33,8 @@ class CheckBookIOExtension extends Extension
     private function addParameters(array $config, ContainerBuilder $container){
         $container->setParameter('beyerz.checkbook.private_key',$config[Configuration::NODE_PRIVATE_KEY]);
         $container->setParameter('beyerz.checkbook.public_key',$config[Configuration::NODE_PUBLIC_KEY]);
+        $container->setParameter('beyerz.checkbook.merchant_name',$config[Configuration::NODE_MERCHANT_NAME]);
+        $container->setParameter('beyerz.checkbook.sandbox',$config[Configuration::NODE_SANDBOX_MODE]);
     }
 
     /**

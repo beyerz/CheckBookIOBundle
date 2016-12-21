@@ -7,7 +7,8 @@ framework:
         storage_id: session.storage.filesystem
 
 check_book_io:
-    publishable_key:  2e9f9a914f034a3588fff965dc748039
-    secret_key:       3298b9a2e758360fe5f14debf342160fc30fe45552fff546c44c21b12b9c9fee62e0223d2b730de1fb32282f24cd76561a3059a58cd672e035dd26fa41ba01f13f0de2f71d6e6e90a5f15989412a48ae5de8dcf3fe734077eb37a92351640704f0ea55b235cb3fb8fdb586e718f3f45fbbf22df55d5acc52228e9d23ee85da2ef415152a3657a63246aa3a4355f43fc91941d3dec665dce6435576579bd9ae3012be4f8b1f4d85b87717a8560d1c37970a804d0aea3e222ce647f423a6599b25414aaba723cee50c891dd37c60484096f39d86824c55e6a682d38150af6afc746cb21bfda5f0f4be64492a5ccf4f461ca2d9e3c4b7822dccdd267a95a322535e
+    publishable_key:  34vytrhu7ti6yg5u764nu456yg
+    secret_key:       432jkthb432jl6bh345g654jn6tj4ihtui4otyv4389ftyn48p9ctuyvn8940tycn8904n347cytrn894tyb48n
     sandbox:          true
     debug:            false
+    merchant_name:    test_name

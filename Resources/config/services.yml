@@ -27,3 +27,14 @@ services:
       - "@checkbook.check"
       - "@checkbook.invoice"
       - "@checkbook.subscription"
+
+  #Twig extension for embedded check
+  twig.embeddedcheck_extension:
+    class: Beyerz\CheckBookIOBundle\Twig\Extensions\EmbeddedCheckExtension
+    arguments:
+      - "%beyerz.checkbook.public_key%"
+      - "%beyerz.checkbook.merchant_name%"
+      - "%beyerz.checkbook.sandbox%"
+    public: false
+    tags:
+        - { name: twig.extension }
