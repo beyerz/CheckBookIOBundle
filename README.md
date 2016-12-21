@@ -6,7 +6,7 @@ The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.ch
 # Installation
 ### Composer
 
-    composer require beyerz/beyerz/check-book-io-bundle
+    composer require beyerz/check-book-io-bundle
 
 ### Application Kernel
 
@@ -19,7 +19,7 @@ Add SimpleHMVC to the `registerBundles()` method of your application kernel:
         );
     }
 
-# Config
+### Config
 config.yml
 ```yaml
 check_book_io:
@@ -44,33 +44,6 @@ Embedded form check
 To use the embeded form check you should populate the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext``` and pass it to your twig template.
 Then use ```{{ embedded_check(context) }}``` where context is the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext```
 This will automatically generate the checkbook button.
-
-# Config
-config.yml
-```yaml
-check_book_io:
-    publishable_key:  "%checkbook_publishable_key%"       # public_key
-    secret_key:       "%checkbook_secret_key%"            # private_key
-    sandbox:          "%checkbook_sandbox%"               # use sandbox mode
-    debug:            "%checkbook_debug%"                 # use debug mode
-```
-## Installation
-### Composer
-
-    composer require beyerz/beyerz/check-book-io-bundle
-
-### Application Kernel
-
-Add SimpleHMVC to the `registerBundles()` method of your application kernel:
-
-    public function registerBundles()
-    {
-        return array(
-            new Beyerz\CheckBookIOBundle\CheckBookIOBundle(),
-        );
-    }
-
-
 
 ## License
 This bundle is under the MIT license. See the complete license [in the bundle](LICENSE)
