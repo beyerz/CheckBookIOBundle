@@ -6,6 +6,13 @@ services:
       - [setContainer,['@service_container']]
     public: false
 
+  checkbook.gateway.charge:
+    class: Beyerz\CheckBookIOBundle\Gateway\ChargeGateway
+    arguments: ["@checkbook.client"]
+    calls:
+      - [setContainer,['@service_container']]
+    public: false
+
   checkbook.check:
     class: Beyerz\CheckBookIOBundle\Model\Check\Check
     arguments: ["@checkbook.gateway.rest"]
@@ -21,12 +28,18 @@ services:
     arguments: ["@checkbook.gateway.rest"]
     public: false
 
+  checkbook.charge:
+    class: Beyerz\CheckBookIOBundle\Model\Charge\Charge
+    arguments: ["@checkbook.gateway.charge"]
+    public: false
+
   checkbook.model:
     class: Beyerz\CheckBookIOBundle\Model\CheckbookIO
     arguments:
       - "@checkbook.check"
       - "@checkbook.invoice"
       - "@checkbook.subscription"
+      - "@checkbook.charge"
 
   #Twig extension for embedded check
   twig.embeddedcheck_extension:

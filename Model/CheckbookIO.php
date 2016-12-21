@@ -9,6 +9,7 @@
 namespace Beyerz\CheckBookIOBundle\Model;
 
 
+use Beyerz\CheckBookIOBundle\Model\Charge\Charge;
 use Beyerz\CheckBookIOBundle\Model\Check\Check;
 use Beyerz\CheckBookIOBundle\Model\Invoice\Invoice;
 use Beyerz\CheckBookIOBundle\Model\Subscription\Subscription;
@@ -31,16 +32,22 @@ class CheckbookIO
     private $subscription;
 
     /**
+     * @var Charge
+     */
+    private $charge;
+
+    /**
      * CheckbookIO constructor.
      * @param Check $check
      * @param Invoice $invoice
      * @param Subscription $subscription
      */
-    public function __construct(Check $check, Invoice $invoice, Subscription $subscription)
+    public function __construct(Check $check, Invoice $invoice, Subscription $subscription, Charge $charge)
     {
         $this->check = $check;
         $this->invoice = $invoice;
         $this->subscription = $subscription;
+        $this->charge = $charge;
     }
 
     /**
@@ -64,5 +71,7 @@ class CheckbookIO
         return $this->subscription;
     }
 
-
+    public function charge(){
+        return $this->charge;
+    }
 }

@@ -40,11 +40,10 @@ class Subscription
 
     public function listAll(){
         $response = $this->gateway->get('/v2/subscription');
-        var_dump($response);die;
         $list = [];
-        foreach ($response['checks'] as $checkArray) {
-            $check = new \Beyerz\CheckBookIOBundle\Entity\Check($checkArray);
-            array_push($list, $check);
+        foreach ($response->getBody()['subscriptions'] as $subscription) {
+            $sub = new \Beyerz\CheckBookIOBundle\Entity\Subscription($subscription);
+            array_push($list, $sub);
         }
         return $list;
     }
