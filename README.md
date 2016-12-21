@@ -3,31 +3,7 @@
 # CheckBookIOBundle
 The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.checkbook.io/) API.
 
-# Documentation
-Using the bundle is extremely simple...
-anywhere that has access to container and services
-```php
-$checkBook = $this->getContainer()->get('checkbook.model');
-```
-Boom!! You now have a facade to access all the Checkbook API Endpoints.
-
-### Bonus Feature
-Embedded form check
-
-To use the embeded form check you should populate the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext``` and pass it to your twig template.
-Then use ```{{ embedded_check(context) }}``` where context is the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext```
-This will automatically generate the checkbook button.
-
-# Config
-config.yml
-```yaml
-check_book_io:
-    publishable_key:  "%checkbook_publishable_key%"       # public_key
-    secret_key:       "%checkbook_secret_key%"            # private_key
-    sandbox:          "%checkbook_sandbox%"               # use sandbox mode
-    debug:            "%checkbook_debug%"                 # use debug mode
-```
-## Installation
+# Installation
 ### Composer
 
     composer require beyerz/beyerz/check-book-io-bundle
@@ -43,7 +19,31 @@ Add SimpleHMVC to the `registerBundles()` method of your application kernel:
         );
     }
 
+# Config
+config.yml
+```yaml
+check_book_io:
+    publishable_key:  "%checkbook_publishable_key%"       # public_key
+    secret_key:       "%checkbook_secret_key%"            # private_key
+    sandbox:          "%checkbook_sandbox%"               # use sandbox mode
+    debug:            "%checkbook_debug%"                 # use debug mode
+    merchant_name:    "%checkbook_merchant_name%"         # merchant name to use
+```
 
+# Documentation
+Using the bundle is extremely simple...
+anywhere that has access to container and services
+```php
+$checkBook = $this->getContainer()->get('checkbook.model');
+```
+Boom!! You now have a facade to access all the Checkbook API Endpoints.
+
+### Bonus Feature
+Embedded form check
+
+To use the embeded form check you should populate the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext``` and pass it to your twig template.
+Then use ```{{ embedded_check(context) }}``` where context is the ```Beyerz\CheckBookIOBundle\Context\EmbeddedCheckContext```
+This will automatically generate the checkbook button.
 
 ## License
 This bundle is under the MIT license. See the complete license [in the bundle](LICENSE)
