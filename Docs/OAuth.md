@@ -11,7 +11,8 @@ OAuth can sometimes be confusing, but guess what, here its been solved with a si
 ## Example
 
 Adding the button to your view
-```Resources\views\sample\oauth_connect.html.twig```
+
+`Resources\views\sample\oauth_connect.html.twig`
 ```html
 {% extends '::base.html.twig' %}
 {% block body %}
@@ -22,7 +23,8 @@ Adding the button to your view
 ```
 
 Creating the handler class
-```EventListener\CheckBookOauthConnectEventListener.php```
+
+`EventListener\CheckBookOauthConnectEventListener.php`
 ```php
 <?php
 
@@ -50,7 +52,8 @@ class CheckBookOauthConnectEventListener extends \Beyerz\CheckBookIOBundle\Event
 ```
 
 The config
-```app\config\config.yml```
+
+`app\config\config.yml`
 ```yaml
 check_book_io:
     oauth:
