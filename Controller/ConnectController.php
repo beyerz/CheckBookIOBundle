@@ -7,6 +7,7 @@ use Beyerz\CheckBookIOBundle\Model\Oauth\OauthTokenEntity;
 use GuzzleHttp\Exception\ClientException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ConnectController extends Controller
 {
@@ -18,6 +19,7 @@ class ConnectController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $redirectUri = $this->generateUrl('check_book_io_oauth_connect',[],UrlGeneratorInterface::ABSOLUTE_URL);
         if($request->query->has('redirect')){
             if($request->server->has('HTTP_REFERER')) {
                 $this->container->get('session')->set(self::TARGET_PATH_KEY, $request->server->get('HTTP_REFERER'));
@@ -27,7 +29,7 @@ class ConnectController extends Controller
                 'client_id' => $this->getParameter('beyerz.checkbook.oauth.client_id'),
                 'response_type' => 'code',
                 'scope' => 'check',
-                'redirect_uri' => $this->getParameter('beyerz.checkbook.oauth.redirect_uri')
+                'redirect_uri' => $redirectUri
             ];
             $queryString = http_build_query($queryParams);
             $href = sprintf('%s%s%s',$this->getParameter('beyerz.checkbook.sandbox')?'https://sandbox.checkbook.io':'https://checkbook.io','/oauth/authorize?',$queryString);
@@ -42,7 +44,7 @@ class ConnectController extends Controller
                 ->setGrantType('authorization_code')
                 ->setScope('check')
                 ->setCode($authCode)
-                ->setRedirectUri($this->getParameter('beyerz.checkbook.oauth.redirect_uri'))
+                ->setRedirectUri($redirectUri)
                 ->setClientSecret($this->getParameter('beyerz.checkbook.private_key'));
 
             try {

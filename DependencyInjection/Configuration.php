@@ -20,7 +20,6 @@ class Configuration implements ConfigurationInterface
     const NODE_DEBUG_MODE = 'debug';
     const NODE_OAUTH = 'oauth';
     const NODE_OAUTH_CLIENT_ID = 'client_id';
-    const NODE_OAUTH_CALLBACK_URL = 'callback_url';
     const NODE_OAUTH_EVENT_HANDLER = 'handler';
 
 
@@ -42,7 +41,6 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode(self::NODE_OAUTH)
                     ->children()
                         ->scalarNode(self::NODE_OAUTH_CLIENT_ID)->end()
-                        ->scalarNode(self::NODE_OAUTH_CALLBACK_URL)->end()
                         ->scalarNode(self::NODE_OAUTH_EVENT_HANDLER)->end()
                     ->end()
                 ->end()

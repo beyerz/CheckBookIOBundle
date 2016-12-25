@@ -32,7 +32,6 @@ check_book_io:
     merchant_name:    "%checkbook_merchant_name%"         # merchant name to use
     oauth:
       client_id:      "%checkbook_oauth_client_id%"
-      callback_url:   "%checkbook_oauth_callback_url%"
       handler:        path\to\custom\response\handler
 ```
 

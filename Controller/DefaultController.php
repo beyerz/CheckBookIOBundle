@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     /**
-     * @Route(path="/")
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()

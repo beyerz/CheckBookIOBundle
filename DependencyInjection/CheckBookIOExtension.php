@@ -5,6 +5,7 @@ namespace Beyerz\CheckBookIOBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use GuzzleHttp\Client;
@@ -42,7 +43,6 @@ class CheckBookIOExtension extends Extension
         $container->setParameter('beyerz.checkbook.sandbox',$config[Configuration::NODE_SANDBOX_MODE]);
         if(isset($config[Configuration::NODE_OAUTH])) {
             $container->setParameter('beyerz.checkbook.oauth.client_id', $config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CLIENT_ID]);
-            $container->setParameter('beyerz.checkbook.oauth.redirect_uri', $config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CALLBACK_URL]);
         }
     }
 
@@ -76,11 +76,19 @@ class CheckBookIOExtension extends Extension
 
     private function processOauthConnectTwigExtension(array $config, ContainerBuilder $container){
         $twigExtension = new Definition(OauthConnectExtension::class);
-        $twigExtension->addArgument($config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CLIENT_ID])
-            ->addArgument($config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CALLBACK_URL])
-            ->addArgument($config[Configuration::NODE_SANDBOX_MODE]);
         $twigExtension->setPublic(false);
         $twigExtension->addTag('twig.extension');
+        $container->setDefinition('beyerz.checkbookio.twig.oauth_connect',$twigExtension);
+
+//        twig.oauth_connect:
+//    class: Beyerz\CheckBookIOBundle\Twig\Extensions\OauthConnectExtension
+//    arguments:
+//      - "%beyerz.checkbook.oauth.client_id%"
+//      - "%beyerz.checkbook.oauth.redirect_uri%"
+//      - "%beyerz.checkbook.sandbox%"
+//    public: false
+//    tags:
+//        - { name: twig.extension }
     }
 
     /**
