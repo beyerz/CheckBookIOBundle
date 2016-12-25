@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use GuzzleHttp\Client;
+use Beyerz\CheckBookIOBundle\Twig\Extensions\OauthConnectExtension;
 
 /**
  * This is the class that loads and manages your bundle configuration.
@@ -30,6 +31,7 @@ class CheckBookIOExtension extends Extension
         $this->processClientConfiguration($config, $container);
         if(isset($config[Configuration::NODE_OAUTH])) {
             $this->processOauthHandler($config, $container);
+            $this->processOauthConnectTwigExtension($config, $container);
         }
     }
 
@@ -70,6 +72,15 @@ class CheckBookIOExtension extends Extension
         $serviceName = 'checkbook.event_listener.oauth_connect';
         $listener->addTag('kernel.event_subscriber');
         $container->setDefinition($serviceName,$listener);
+    }
+
+    private function processOauthConnectTwigExtension(array $config, ContainerBuilder $container){
+        $twigExtension = new Definition(OauthConnectExtension::class);
+        $twigExtension->addArgument($config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CLIENT_ID])
+            ->addArgument($config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CALLBACK_URL])
+            ->addArgument($config[Configuration::NODE_SANDBOX_MODE]);
+        $twigExtension->setPublic(false);
+        $twigExtension->addTag('twig.extension');
     }
 
     /**
