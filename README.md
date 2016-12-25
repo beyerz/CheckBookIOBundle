@@ -46,7 +46,7 @@ Boom!! You now have a facade to access all the Checkbook API Endpoints.
 
 ### OAuth
 
-[Explained is in detail here](Docs/OAuth.md)
+[Explained in detail here](Docs/OAuth.md)
 
 ### Bonus Feature
 Embedded form check
