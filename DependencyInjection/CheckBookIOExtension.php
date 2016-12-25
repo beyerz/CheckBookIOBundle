@@ -28,6 +28,7 @@ class CheckBookIOExtension extends Extension
         $loader->load('services.yml');
         $this->addParameters($config, $container);
         $this->processClientConfiguration($config, $container);
+        $this->processOauthHandler($config, $container);
     }
 
     private function addParameters(array $config, ContainerBuilder $container){
@@ -35,6 +36,8 @@ class CheckBookIOExtension extends Extension
         $container->setParameter('beyerz.checkbook.public_key',$config[Configuration::NODE_PUBLIC_KEY]);
         $container->setParameter('beyerz.checkbook.merchant_name',$config[Configuration::NODE_MERCHANT_NAME]);
         $container->setParameter('beyerz.checkbook.sandbox',$config[Configuration::NODE_SANDBOX_MODE]);
+        $container->setParameter('beyerz.checkbook.oauth.client_id',$config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CLIENT_ID]);
+        $container->setParameter('beyerz.checkbook.oauth.redirect_uri',$config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_CALLBACK_URL]);
     }
 
     /**
@@ -55,6 +58,14 @@ class CheckBookIOExtension extends Extension
         $clientServiceName = 'checkbook.client';
         // add the client definition to the container
         $container->setDefinition($clientServiceName, $client);
+    }
+
+    private function processOauthHandler(array $config, ContainerBuilder $container){
+        $listener = new Definition($config[Configuration::NODE_OAUTH][Configuration::NODE_OAUTH_EVENT_HANDLER]);
+        $listener->setLazy(true);
+        $serviceName = 'checkbook.event_listener.oauth_connect';
+        $listener->addTag('kernel.event_subscriber');
+        $container->setDefinition($serviceName,$listener);
     }
 
     /**

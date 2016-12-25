@@ -12,12 +12,14 @@ The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.ch
 
 Add SimpleHMVC to the `registerBundles()` method of your application kernel:
 
-    public function registerBundles()
-    {
-        return array(
-            new Beyerz\CheckBookIOBundle\CheckBookIOBundle(),
-        );
-    }
+```php
+public function registerBundles()
+{
+    return array(
+        new Beyerz\CheckBookIOBundle\CheckBookIOBundle(),
+    );
+}
+```
 
 ### Config
 config.yml
@@ -28,6 +30,10 @@ check_book_io:
     sandbox:          "%checkbook_sandbox%"               # use sandbox mode
     debug:            "%checkbook_debug%"                 # use debug mode
     merchant_name:    "%checkbook_merchant_name%"         # merchant name to use
+    oauth:
+      client_id:      "%checkbook_oauth_client_id%"
+      callback_url:   "%checkbook_oauth_callback_url%"
+      handler:        path\to\custom\response\handler
 ```
 
 # Documentation
@@ -37,6 +43,10 @@ anywhere that has access to container and services
 $checkBook = $this->getContainer()->get('checkbook.model');
 ```
 Boom!! You now have a facade to access all the Checkbook API Endpoints.
+
+### OAuth
+
+[Explained is in detail here](Docs/OAuth.md)
 
 ### Bonus Feature
 Embedded form check

@@ -1,4 +1,5 @@
 services:
+#Gateways
   checkbook.gateway.rest:
     class: Beyerz\CheckBookIOBundle\Gateway\RestGateway
     arguments: ["@checkbook.client"]
@@ -13,6 +14,14 @@ services:
       - [setContainer,['@service_container']]
     public: false
 
+  checkbook.gateway.url_encoded:
+    class: Beyerz\CheckBookIOBundle\Gateway\UrlEncodedGateway
+    arguments: ["@checkbook.client"]
+    calls:
+      - [setContainer,['@service_container']]
+    public: false
+
+#Models
   checkbook.check:
     class: Beyerz\CheckBookIOBundle\Model\Check\Check
     arguments: ["@checkbook.gateway.rest"]
@@ -33,6 +42,11 @@ services:
     arguments: ["@checkbook.gateway.charge"]
     public: false
 
+  checkbook.oauth:
+    class: Beyerz\CheckBookIOBundle\Model\Oauth\Oauth
+    arguments: ["@checkbook.gateway.url_encoded"]
+    public: false
+
   checkbook.model:
     class: Beyerz\CheckBookIOBundle\Model\CheckbookIO
     arguments:
@@ -40,13 +54,25 @@ services:
       - "@checkbook.invoice"
       - "@checkbook.subscription"
       - "@checkbook.charge"
+      - "@checkbook.oauth"
 
+#Twig Extensions
   #Twig extension for embedded check
   twig.embeddedcheck_extension:
     class: Beyerz\CheckBookIOBundle\Twig\Extensions\EmbeddedCheckExtension
     arguments:
       - "%beyerz.checkbook.public_key%"
       - "%beyerz.checkbook.merchant_name%"
+      - "%beyerz.checkbook.sandbox%"
+    public: false
+    tags:
+        - { name: twig.extension }
+
+  twig.oauth_connect:
+    class: Beyerz\CheckBookIOBundle\Twig\Extensions\OauthConnectExtension
+    arguments:
+      - "%beyerz.checkbook.oauth.client_id%"
+      - "%beyerz.checkbook.oauth.redirect_uri%"
       - "%beyerz.checkbook.sandbox%"
     public: false
     tags:

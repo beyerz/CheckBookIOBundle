@@ -4,3 +4,6 @@ check_book_io_homepage:
 check_book_io_embed:
     path:     /checkbookio/embed-check
     defaults: { _controller: CheckBookIOBundle:EmbedCheck:index}
+check_book_io_oauth_connect:
+    path:     /checkbookio/connect
+    defaults: { _controller: CheckBookIOBundle:Connect:index}
