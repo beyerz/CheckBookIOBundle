@@ -12,6 +12,7 @@ namespace Beyerz\CheckBookIOBundle\Model;
 use Beyerz\CheckBookIOBundle\Model\Charge\Charge;
 use Beyerz\CheckBookIOBundle\Model\Check\Check;
 use Beyerz\CheckBookIOBundle\Model\Invoice\Invoice;
+use Beyerz\CheckBookIOBundle\Model\Oauth\Oauth;
 use Beyerz\CheckBookIOBundle\Model\Subscription\Subscription;
 
 class CheckbookIO
@@ -37,17 +38,25 @@ class CheckbookIO
     private $charge;
 
     /**
+     * @var Oauth
+     */
+    private $oauth;
+
+    /**
      * CheckbookIO constructor.
      * @param Check $check
      * @param Invoice $invoice
      * @param Subscription $subscription
+     * @param Charge $charge
+     * @param Oauth $oauth
      */
-    public function __construct(Check $check, Invoice $invoice, Subscription $subscription, Charge $charge)
+    public function __construct(Check $check, Invoice $invoice, Subscription $subscription, Charge $charge, Oauth $oauth)
     {
         $this->check = $check;
         $this->invoice = $invoice;
         $this->subscription = $subscription;
         $this->charge = $charge;
+        $this->oauth = $oauth;
     }
 
     /**
@@ -71,7 +80,17 @@ class CheckbookIO
         return $this->subscription;
     }
 
+    /**
+     * @return Charge
+     */
     public function charge(){
         return $this->charge;
+    }
+
+    /**
+     * @return Oauth
+     */
+    public function oauth(){
+        return $this->oauth;
     }
 }

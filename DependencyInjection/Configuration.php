@@ -18,6 +18,11 @@ class Configuration implements ConfigurationInterface
     const NODE_MERCHANT_NAME = 'merchant_name';
     const NODE_SANDBOX_MODE = 'sandbox';
     const NODE_DEBUG_MODE = 'debug';
+    const NODE_OAUTH = 'oauth';
+    const NODE_OAUTH_CLIENT_ID = 'client_id';
+    const NODE_OAUTH_CALLBACK_URL = 'callback_url';
+    const NODE_OAUTH_EVENT_HANDLER = 'handler';
+
 
     /**
      * {@inheritdoc}
@@ -34,6 +39,13 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode(self::NODE_MERCHANT_NAME)->end()
                 ->booleanNode(self::NODE_SANDBOX_MODE)->defaultTrue()->end()
                 ->booleanNode(self::NODE_DEBUG_MODE)->defaultTrue()->end()
+                ->arrayNode(self::NODE_OAUTH)
+                    ->children()
+                        ->scalarNode(self::NODE_OAUTH_CLIENT_ID)->end()
+                        ->scalarNode(self::NODE_OAUTH_CALLBACK_URL)->end()
+                        ->scalarNode(self::NODE_OAUTH_EVENT_HANDLER)->end()
+                    ->end()
+                ->end()
             ->end();
 
         return $treeBuilder;
