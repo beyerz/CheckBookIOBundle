@@ -63,6 +63,7 @@ check_book_io:
 ## How it works
 ### Twig Extension
 Based on the config settings, the twig function automatically builds the button and required parameters that will be sent to checkbook
+Please note that if you do not add the OAuth config, this extension will never be created and attempting to use it will result in an `Unknown "checkbook_connect" function.` Error
 
 ### Handler
 After getting the response from checkbook, we trigger an event that can be caught and handled. Doing it this way allows us to expose this data to you very easily.

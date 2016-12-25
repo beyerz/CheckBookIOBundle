@@ -67,13 +67,3 @@ services:
     public: false
     tags:
         - { name: twig.extension }
-
-  twig.oauth_connect:
-    class: Beyerz\CheckBookIOBundle\Twig\Extensions\OauthConnectExtension
-    arguments:
-      - "%beyerz.checkbook.oauth.client_id%"
-      - "%beyerz.checkbook.oauth.redirect_uri%"
-      - "%beyerz.checkbook.sandbox%"
-    public: false
-    tags:
-        - { name: twig.extension }
