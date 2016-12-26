@@ -7,6 +7,7 @@ OAuth can sometimes be confusing, but guess what, here its been solved with a si
 1. Add the Oauth Connect button to your twig template.
 2. Create the Oauth response handler to get the result.
 3. Define the handler full class name in the config
+4. Add the connect route to your main project route
 
 ## Example
 
@@ -58,6 +59,14 @@ The config
 check_book_io:
     oauth:
       handler: AcmeBundle\EventListener\CheckBookOauthConnectEventListener
+```
+
+The route
+
+`app\config\routing.yml`
+```yaml
+check_book_io_oauth_connect:
+    resource: "@CheckBookIOBundle/Resources/config/connect_route.yml"
 ```
 
 ## How it works
