@@ -71,6 +71,7 @@ class CheckBookIOExtension extends Extension
         $listener->setLazy(true);
         $serviceName = 'checkbook.event_listener.oauth_connect';
         $listener->addTag('kernel.event_subscriber');
+        $listener->addMethodCall('setContainer',[new Reference('service_container')]);
         $container->setDefinition($serviceName,$listener);
     }
 
@@ -79,16 +80,6 @@ class CheckBookIOExtension extends Extension
         $twigExtension->setPublic(false);
         $twigExtension->addTag('twig.extension');
         $container->setDefinition('beyerz.checkbookio.twig.oauth_connect',$twigExtension);
-
-//        twig.oauth_connect:
-//    class: Beyerz\CheckBookIOBundle\Twig\Extensions\OauthConnectExtension
-//    arguments:
-//      - "%beyerz.checkbook.oauth.client_id%"
-//      - "%beyerz.checkbook.oauth.redirect_uri%"
-//      - "%beyerz.checkbook.sandbox%"
-//    public: false
-//    tags:
-//        - { name: twig.extension }
     }
 
     /**

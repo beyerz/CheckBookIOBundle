@@ -10,10 +10,13 @@ namespace Beyerz\CheckBookIOBundle\EventListener;
 
 
 use Beyerz\CheckBookIOBundle\Event\OnOauthConnectEvent;
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 abstract class OnOauthConnectEventListener implements EventSubscriberInterface
 {
+
+    use ContainerAwareTrait;
 
     /**
      * Returns an array of event names this subscriber wants to listen to.
@@ -43,4 +46,31 @@ abstract class OnOauthConnectEventListener implements EventSubscriberInterface
      * @return mixed
      */
     abstract public function handler(OnOauthConnectEvent $event);
+
+    /**
+     * Get a user from the Security Token Storage.
+     *
+     * @return mixed
+     *
+     * @throws \LogicException If SecurityBundle is not available
+     *
+     * @see TokenInterface::getUser()
+     */
+    public function getUser()
+    {
+        if (!$this->container->has('security.token_storage')) {
+            throw new \LogicException('The SecurityBundle is not registered in your application.');
+        }
+
+        if (null === $token = $this->container->get('security.token_storage')->getToken()) {
+            return;
+        }
+
+        if (!is_object($user = $token->getUser())) {
+            // e.g. anonymous authentication
+            return;
+        }
+
+        return $user;
+    }
 }
