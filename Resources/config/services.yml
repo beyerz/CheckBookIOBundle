@@ -44,7 +44,12 @@ services:
 
   checkbook.oauth:
     class: Beyerz\CheckBookIOBundle\Model\Oauth\Oauth
-    arguments: ["@checkbook.gateway.url_encoded"]
+    arguments:
+      - "@checkbook.gateway.url_encoded"
+      - "@checkbook.check"
+      - "@checkbook.invoice"
+      - "@checkbook.subscription"
+
     public: false
 
   checkbook.model:

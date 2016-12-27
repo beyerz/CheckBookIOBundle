@@ -9,16 +9,23 @@
 namespace Beyerz\CheckBookIOBundle\Model\Invoice;
 
 
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Request as CreateRequest;
 use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Response as CreateResponse;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
+use Beyerz\CheckBookIOBundle\Model\OauthInterface;
 
-class Invoice
+class Invoice implements OauthInterface
 {
     /**
      * @var RestGateway
      */
     private $gateway;
+
+    /**
+     * @var Oauth
+     */
+    private $oauth;
 
     /**
      * Check constructor.
@@ -42,7 +49,8 @@ class Invoice
     }
 
     public function listAll(){
-        $response = $this->gateway->get('/v2/invoice');
+        $response = $this->gateway->get('/v2/invoice', $this->oauth);
+        $this->clearOauth();
         var_dump($response);die;
         $list = [];
         foreach ($response['checks'] as $checkArray) {
@@ -54,5 +62,13 @@ class Invoice
 
     public function details(){
 
+    }
+
+    public function setOauth(Oauth $oauth){
+        $this->oauth = $oauth;
+    }
+
+    public function clearOauth(){
+        $this->oauth = null;
     }
 }

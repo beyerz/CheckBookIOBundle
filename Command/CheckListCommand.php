@@ -10,6 +10,7 @@ namespace Beyerz\CheckBookIOBundle\Command;
 
 
 use Beyerz\CheckBookIOBundle\Entity\Check;
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -23,6 +24,7 @@ class CheckListCommand extends ContainerAwareCommand
     {
         $this->setName('checkbook:check:list')
             ->setDescription("List your checks")
+            ->addOption('access_token', 'a', InputOption::VALUE_OPTIONAL, "If querying on behalf of a user with Oauth, provide the access_token",null)
             ->setHelp(<<<'EOF'
             The <info>%command.name%</info> command is used list all the checks under you account
 EOF
@@ -34,7 +36,13 @@ EOF
         $io = new SymfonyStyle($input, $output);
         $io->title("Checks Listing");
         $checkBook = $this->getContainer()->get('checkbook.model');
-        $list = $checkBook->check()->listAll();
+        if(is_null($input->getOption('access_token'))) {
+            $list = $checkBook->check()->listAll();
+        }else{
+            $oauth = new Oauth();
+            $oauth->setAccessToken($input->getOption('access_token'));
+            $list = $checkBook->oauth()->check($oauth)->listAll();
+        }
 
         $headers = [];
         $serialized = [];
