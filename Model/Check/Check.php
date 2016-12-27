@@ -9,9 +9,11 @@
 namespace Beyerz\CheckBookIOBundle\Model\Check;
 
 
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
+use Beyerz\CheckBookIOBundle\Model\OauthInterface;
 
-class Check
+class Check implements OauthInterface
 {
     const URI_CREATE_CHECK = '/v2/check/digital';
     const URI_CANCEL_CHECK = '/v2/check/cancel/%s';
@@ -24,6 +26,11 @@ class Check
     private $gateway;
 
     /**
+     * @var Oauth
+     */
+    private $oauth;
+
+    /**
      * Check constructor.
      * @param RestGateway $gateway
      */
@@ -34,13 +41,15 @@ class Check
 
     public function create(CreateCheckEntity $entity)
     {
-        $response = $this->gateway->post(self::URI_CREATE_CHECK, $entity);
+        $response = $this->gateway->post(self::URI_CREATE_CHECK, $this->oauth, $entity);
+        $this->clearOauth();
         return new \Beyerz\CheckBookIOBundle\Entity\Check($response->getBody());
     }
 
     public function cancel($id)
     {
-        $response = $this->gateway->get(sprintf(self::URI_CANCEL_CHECK,$id));
+        $response = $this->gateway->get(sprintf(self::URI_CANCEL_CHECK,$this->oauth,$id));
+        $this->clearOauth();
         return $response;
     }
 
@@ -49,7 +58,8 @@ class Check
      */
     public function listAll()
     {
-        $response = $this->gateway->get(self::URI_LIST_CHECKS);
+        $response = $this->gateway->get(self::URI_LIST_CHECKS,$this->oauth);
+        $this->clearOauth();
         $list = [];
         foreach ($response->getBody()['checks'] as $checkArray) {
             $check = new \Beyerz\CheckBookIOBundle\Entity\Check($checkArray);
@@ -64,7 +74,16 @@ class Check
      */
     public function details($id)
     {
-        $response =  $this->gateway->get(sprintf(self::URI_DETAILS_CHECK,$id));
+        $response =  $this->gateway->get(sprintf(self::URI_DETAILS_CHECK,$this->oauth,$id));
+        $this->clearOauth();
         return new \Beyerz\CheckBookIOBundle\Entity\Check($response->getBody());
+    }
+
+    public function setOauth(Oauth $oauth){
+        $this->oauth = $oauth;
+    }
+
+    public function clearOauth(){
+        $this->oauth = null;
     }
 }

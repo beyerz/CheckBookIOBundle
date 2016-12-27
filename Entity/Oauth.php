@@ -35,12 +35,14 @@ class Oauth
      * Oauth constructor.
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config = null)
     {
-        $this->accessToken = $config['access_token'];
-        $this->tokenType = $config['token_type'];
-        $this->refreshToken = $config['refresh_token'];
-        $this->scope = $config['scope'];
+        if(!is_null($config)) {
+            $this->accessToken = $config['access_token'];
+            $this->tokenType = $config['token_type'];
+            $this->refreshToken = $config['refresh_token'];
+            $this->scope = $config['scope'];
+        }
     }
 
     /**

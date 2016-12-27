@@ -9,14 +9,21 @@
 namespace Beyerz\CheckBookIOBundle\Model\Subscription;
 
 
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
+use Beyerz\CheckBookIOBundle\Model\OauthInterface;
 
-class Subscription
+class Subscription implements OauthInterface
 {
     /**
      * @var RestGateway
      */
     private $gateway;
+
+    /**
+     * @var Oauth
+     */
+    private $oauth;
 
     /**
      * Check constructor.
@@ -39,7 +46,7 @@ class Subscription
     }
 
     public function listAll(){
-        $response = $this->gateway->get('/v2/subscription');
+        $response = $this->gateway->get('/v2/subscription', $this->oauth);
         $list = [];
         foreach ($response->getBody()['subscriptions'] as $subscription) {
             $sub = new \Beyerz\CheckBookIOBundle\Entity\Subscription($subscription);
@@ -50,5 +57,13 @@ class Subscription
 
     public function details(){
 
+    }
+
+    public function setOauth(Oauth $oauth){
+        $this->oauth = $oauth;
+    }
+
+    public function clearOauth(){
+        $this->oauth = null;
     }
 }
