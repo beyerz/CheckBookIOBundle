@@ -9,6 +9,8 @@
 namespace Beyerz\CheckBookIOBundle\Gateway;
 
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 class Response
 {
     /**
@@ -17,7 +19,7 @@ class Response
     private $headers;
 
     /**
-     * @var array
+     * @var ParameterBag
      */
     private $body;
 
@@ -45,7 +47,7 @@ class Response
     }
 
     /**
-     * @return array
+     * @return ParameterBag
      */
     public function getBody()
     {
@@ -53,10 +55,10 @@ class Response
     }
 
     /**
-     * @param array $body
+     * @param ParameterBag $body
      * @return $this
      */
-    public function setBody($body)
+    public function setBody(ParameterBag $body)
     {
         $this->body = $body;
         return $this;

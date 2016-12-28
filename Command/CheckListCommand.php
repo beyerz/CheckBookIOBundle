@@ -54,5 +54,6 @@ EOF
             }
         }
         $io->table($headers, $serialized);
+        $io->success('done');
     }
 }

@@ -10,10 +10,9 @@ namespace Beyerz\CheckBookIOBundle\Model\Invoice;
 
 
 use Beyerz\CheckBookIOBundle\Entity\Oauth;
-use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Request as CreateRequest;
-use Beyerz\CheckBookIOBundle\Gateway\Invoice\Create\Response as CreateResponse;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
 use Beyerz\CheckBookIOBundle\Model\OauthInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Invoice implements OauthInterface
 {
@@ -36,32 +35,26 @@ class Invoice implements OauthInterface
         $this->gateway = $gateway;
     }
 
-    /**
-     * @param CreateRequest $request
-     * @return CreateResponse
-     */
-    public function create(CreateRequest $request){
-
+    public function create(){
+        throw new \Exception(sprintf("Function not yet implemented: %s::", __CLASS__,__FUNCTION__));
     }
 
     public function cancel(){
-
+        throw new \Exception(sprintf("Function not yet implemented: %s::", __CLASS__,__FUNCTION__));
     }
 
     public function listAll(){
         $response = $this->gateway->get('/v2/invoice', $this->oauth);
         $this->clearOauth();
-        var_dump($response);die;
         $list = [];
-        foreach ($response['checks'] as $checkArray) {
-            $check = new \Beyerz\CheckBookIOBundle\Entity\Check($checkArray);
-            array_push($list, $check);
+        foreach ($response->getBody()->get('invoices') as $invoice) {
+            array_push($list, new \Beyerz\CheckBookIOBundle\Entity\Invoice(new ParameterBag($invoice)));
         }
         return $list;
     }
 
     public function details(){
-
+        throw new \Exception(sprintf("Function not yet implemented: %s::", __CLASS__,__FUNCTION__));
     }
 
     public function setOauth(Oauth $oauth){

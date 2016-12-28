@@ -9,7 +9,7 @@
 namespace Beyerz\CheckBookIOBundle\Command;
 
 
-use Beyerz\CheckBookIOBundle\Entity\Check;
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -24,6 +24,7 @@ class CheckDetailsCommand extends ContainerAwareCommand
         $this->setName('checkbook:check:details')
             ->setDescription("Get the details of an existing check")
             ->addArgument('id', InputOption::VALUE_REQUIRED, 'Check Id')
+            ->addOption('access_token', 'a', InputOption::VALUE_OPTIONAL, "If querying on behalf of a user with Oauth, provide the access_token",null)
             ->setHelp(<<<'EOF'
             The <info>%command.name%</info> command is used to get the details of an existing check
 EOF
@@ -35,10 +36,17 @@ EOF
         $io = new SymfonyStyle($input, $output);
         $io->title("Check Details");
         $checkBook = $this->getContainer()->get('checkbook.model');
-        $check = $checkBook->check()->details($input->getArgument('id'));
+        if(is_null($input->getOption('access_token'))) {
+            $check = $checkBook->check()->details($input->getArgument('id'));
+        }else{
+            $oauth = new Oauth();
+            $oauth->setAccessToken($input->getOption('access_token'));
+            $check = $checkBook->oauth()->check($oauth)->details($input->getArgument('id'));
+        }
 
         $headers = array_keys($check->serialize());
         $serialized = $check->serialize();
         $io->table($headers, [$serialized]);
+        $io->success('done');
     }
 }
