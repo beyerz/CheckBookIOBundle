@@ -11,6 +11,7 @@ namespace Beyerz\CheckBookIOBundle\Gateway;
 use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use GuzzleHttp\Exception\ClientException;
 use \GuzzleHttp\Psr7\Response as Psr7Response;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class RestGateway extends Gateway
 {
@@ -111,7 +112,7 @@ class RestGateway extends Gateway
         $response = new Response();
         $response->setHeaders($httpResponse->getHeaders())
             ->addHeader('Status-Code', $httpResponse->getStatusCode())
-            ->setBody(json_decode($httpResponse->getBody()->getContents(), true));
+            ->setBody(new ParameterBag(json_decode($httpResponse->getBody()->getContents(), true)));
         return $response;
     }
 }

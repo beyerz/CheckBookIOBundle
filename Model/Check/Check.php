@@ -12,6 +12,7 @@ namespace Beyerz\CheckBookIOBundle\Model\Check;
 use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Beyerz\CheckBookIOBundle\Gateway\RestGateway;
 use Beyerz\CheckBookIOBundle\Model\OauthInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Check implements OauthInterface
 {
@@ -48,7 +49,7 @@ class Check implements OauthInterface
 
     public function cancel($id)
     {
-        $response = $this->gateway->get(sprintf(self::URI_CANCEL_CHECK,$this->oauth,$id));
+        $response = $this->gateway->get(sprintf(self::URI_CANCEL_CHECK, $id), $this->oauth);
         $this->clearOauth();
         return $response;
     }
@@ -58,12 +59,11 @@ class Check implements OauthInterface
      */
     public function listAll()
     {
-        $response = $this->gateway->get(self::URI_LIST_CHECKS,$this->oauth);
+        $response = $this->gateway->get(self::URI_LIST_CHECKS, $this->oauth);
         $this->clearOauth();
         $list = [];
-        foreach ($response->getBody()['checks'] as $checkArray) {
-            $check = new \Beyerz\CheckBookIOBundle\Entity\Check($checkArray);
-            array_push($list, $check);
+        foreach ($response->getBody()->get('checks') as $check) {
+            array_push($list, new \Beyerz\CheckBookIOBundle\Entity\Check(new ParameterBag($check)));
         }
         return $list;
     }
@@ -74,16 +74,18 @@ class Check implements OauthInterface
      */
     public function details($id)
     {
-        $response =  $this->gateway->get(sprintf(self::URI_DETAILS_CHECK,$this->oauth,$id));
+        $response = $this->gateway->get(sprintf(self::URI_DETAILS_CHECK, $id), $this->oauth);
         $this->clearOauth();
         return new \Beyerz\CheckBookIOBundle\Entity\Check($response->getBody());
     }
 
-    public function setOauth(Oauth $oauth){
+    public function setOauth(Oauth $oauth)
+    {
         $this->oauth = $oauth;
     }
 
-    public function clearOauth(){
+    public function clearOauth()
+    {
         $this->oauth = null;
     }
 }

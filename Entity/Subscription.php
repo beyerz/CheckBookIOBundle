@@ -9,6 +9,8 @@
 namespace Beyerz\CheckBookIOBundle\Entity;
 
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 class Subscription
 {
     /**
@@ -62,22 +64,22 @@ class Subscription
 
     /**
      * Check constructor.
-     * @param array $options
+     * @param ParameterBag $parameters
      */
-    public function __construct(array $options)
+    public function __construct(ParameterBag $parameters)
     {
-        $this->setId($options['id'])
-            ->setAccount($options['account'])
-            ->setAddress(isset($options['address']) ? $options['address'] : null)
-            ->setAmount($options['amount'])
-            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $options['date']))
-            ->setDescription($options['description'])
-            ->setDuration($options['duration'])
-            ->setInterval($options['interval'])
-            ->setName($options['name'])
-            ->setRecipient($options['recipient'])
-            ->setSkipped($options['skipped'])
-            ->setType($options['type']);
+        $this->setId($parameters->get('id'))
+            ->setAccount($parameters->get('account'))
+            ->setAddress($parameters->get('address'))
+            ->setAmount($parameters->get('amount'))
+            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $parameters->get('date')))
+            ->setDescription($parameters->get('description'))
+            ->setDuration($parameters->get('duration'))
+            ->setInterval($parameters->get('interval'))
+            ->setName($parameters->get('name'))
+            ->setRecipient($parameters->get('recipient'))
+            ->setSkipped($parameters->get('skipped'))
+            ->setType($parameters->get('type'));
     }
 
     /**

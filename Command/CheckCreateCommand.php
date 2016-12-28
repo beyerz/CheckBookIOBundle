@@ -9,6 +9,7 @@
 namespace Beyerz\CheckBookIOBundle\Command;
 
 
+use Beyerz\CheckBookIOBundle\Entity\Oauth;
 use Beyerz\CheckBookIOBundle\Model\Check\CreateCheckEntity;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,6 +31,7 @@ class CheckCreateCommand extends ContainerAwareCommand
             ->addOption('description', 'd', InputOption::VALUE_OPTIONAL, 'Message to appear in the memo field')
             ->addOption('first_name', 'f', InputOption::VALUE_OPTIONAL, 'Recipient’s first name')
             ->addOption('last_name', 'l', InputOption::VALUE_OPTIONAL, 'Recipient’s last name')
+            ->addOption('access_token', 'a', InputOption::VALUE_OPTIONAL, "If querying on behalf of a user with Oauth, provide the access_token",null)
             ->setHelp(<<<'EOF'
             The <info>%command.name%</info> command is used create to new checks that may be sent to either an individual or a business.
             If the check is sent to an individual, the first_name and last_name fields must be populated.
@@ -64,10 +66,18 @@ EOF
             ->setLastName($input->getOption('last_name'));
 
         $checkbook = $this->getContainer()->get('checkbook.model');
-        $check = $checkbook->check()->create($entity);
+        if(is_null($input->getOption('access_token'))) {
+            $check = $checkbook->check()->create($entity);
+        }else{
+            $oauth = new Oauth();
+            $oauth->setAccessToken($input->getOption('access_token'));
+            $check = $checkbook->oauth()->check($oauth)->create($entity);
+        }
+
 
         $headers = array_keys($check->serialize());
         $serialized = $check->serialize();
         $io->table($headers, [$serialized]);
+        $io->success('done');
     }
 }

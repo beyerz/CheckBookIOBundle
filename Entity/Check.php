@@ -9,6 +9,8 @@
 namespace Beyerz\CheckBookIOBundle\Entity;
 
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 class Check
 {
     /**
@@ -63,20 +65,20 @@ class Check
 
     /**
      * Check constructor.
-     * @param array $options
+     * @param ParameterBag $parameters
      */
-    public function __construct(array $options)
+    public function __construct(ParameterBag $parameters)
     {
-        $this->setId($options['id'])
-            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $options['date']))
-            ->setCheckNum($options['check_num'])
-            ->setDescription($options['description'])
-            ->setStatus($options['status'])
-            ->setAmount($options['amount'])
-            ->setToken(isset($options['token']) ? $options['token'] : null)
-            ->setPaid(isset($options['paid']) ? $options['paid'] : null)
-            ->setAddress(isset($options['address']) ? $options['address'] : null)
-            ->setName($options['name']);
+        $this->setId($parameters->get('id'))
+            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $parameters->get('date')))
+            ->setCheckNum($parameters->get('check_num'))
+            ->setDescription($parameters->get('description'))
+            ->setStatus($parameters->get('status'))
+            ->setAmount($parameters->get('amount'))
+            ->setToken($parameters->get('token'))
+            ->setPaid($parameters->get('paid'))
+            ->setAddress($parameters->get('address'))
+            ->setName($parameters->get('name'));
     }
 
     /**
@@ -262,16 +264,16 @@ class Check
     public function serialize()
     {
         return [
-            'id' =>             $this->getId(),
-            'date' =>           $this->getDate()->format('Y-m-d H:i:s'),
-            'checkNum' =>       $this->getCheckNum(),
-            'description' =>    $this->getDescription(),
-            'status' =>         $this->getStatus(),
-            'amount' =>         $this->getAmount(),
-            'token' =>          $this->getToken(),
-            'paid' =>           $this->getPaid(),
-            'address' =>        $this->getAddress(),
-            'name' =>           $this->getName(),
+            'id'            => $this->getId(),
+            'date'          => $this->getDate()->format('Y-m-d H:i:s'),
+            'checkNum'      => $this->getCheckNum(),
+            'description'   => $this->getDescription(),
+            'status'        => $this->getStatus(),
+            'amount'        => $this->getAmount(),
+            'token'         => $this->getToken(),
+            'paid'          => $this->getPaid(),
+            'addressed_to'  => $this->getAddress(),
+            'name'          => $this->getName(),
         ];
     }
 }
