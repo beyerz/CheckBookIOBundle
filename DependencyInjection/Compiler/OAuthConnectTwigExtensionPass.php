@@ -26,7 +26,9 @@ class OAuthConnectTwigExtensionPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $twigExtension = $container->findDefinition('beyerz.checkbookio.twig.oauth_connect');
-        $twigExtension->addArgument(new Reference($container->getAlias('router')));
+        if($container->hasDefinition('beyerz.checkbookio.twig.oauth_connect')) {
+            $twigExtension = $container->findDefinition('beyerz.checkbookio.twig.oauth_connect');
+            $twigExtension->addArgument(new Reference($container->getAlias('router')));
+        }
     }
 }
