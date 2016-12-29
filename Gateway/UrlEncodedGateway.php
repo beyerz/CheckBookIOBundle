@@ -10,6 +10,7 @@ namespace Beyerz\CheckBookIOBundle\Gateway;
 
 use GuzzleHttp\Exception\ClientException;
 use \GuzzleHttp\Psr7\Response as Psr7Response;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class UrlEncodedGateway extends Gateway
 {
@@ -19,7 +20,7 @@ class UrlEncodedGateway extends Gateway
      * @param \JsonSerializable $entity
      * @return Response
      */
-    final public function post($uri, \JsonSerializable $entity)
+    public function post($uri, \JsonSerializable $entity)
     {
         try {
             $httpResponse = $this->client->request('POST', $uri, array_merge($this->headers(),$this->body($entity)));
@@ -50,7 +51,7 @@ class UrlEncodedGateway extends Gateway
         $response = new Response();
         $response->setHeaders($httpResponse->getHeaders())
             ->addHeader('Status-Code',$httpResponse->getStatusCode())
-            ->setBody(json_decode($httpResponse->getBody()->getContents(), true));
+            ->setBody(new ParameterBag(json_decode($httpResponse->getBody()->getContents(), true)));
         return $response;
     }
 }

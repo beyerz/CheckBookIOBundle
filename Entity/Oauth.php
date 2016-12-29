@@ -9,6 +9,8 @@
 namespace Beyerz\CheckBookIOBundle\Entity;
 
 
+use Symfony\Component\HttpFoundation\ParameterBag;
+
 class Oauth
 {
     /**
@@ -33,15 +35,15 @@ class Oauth
 
     /**
      * Oauth constructor.
-     * @param array $config
+     * @param ParameterBag $parameters
      */
-    public function __construct(array $config = null)
+    public function __construct(ParameterBag $parameters = null)
     {
-        if(!is_null($config)) {
-            $this->accessToken = $config['access_token'];
-            $this->tokenType = $config['token_type'];
-            $this->refreshToken = $config['refresh_token'];
-            $this->scope = $config['scope'];
+        if(!is_null($parameters)) {
+            $this->setAccessToken($parameters->get('access_token'));
+            $this->setTokenType($parameters->get('token_type'));
+            $this->setRefreshToken($parameters->get('refresh_token'));
+            $this->setScope($parameters->get('scope'));
         }
     }
 
