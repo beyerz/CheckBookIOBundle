@@ -25,7 +25,7 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
      * @param ChargeEntity $entity
      * @param $expected
      */
-    public function testCharge(ChargeEntity $entity, $expected)
+    public function testCharge(ChargeEntity $entity, \Beyerz\CheckBookIOBundle\Entity\Charge $expected)
     {
         $chargeGatewayMock = $this->getGatewayMock();
 
@@ -37,7 +37,7 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
 
         $charge = $chargeMock->charge($entity);
 
-        $this->assertEquals($expected, $charge);
+        $this->assertEquals($expected->serialize(), $charge->serialize());
 
     }
 
@@ -47,10 +47,12 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
             [
                 'token' => new ChargeEntity(),
                 'expects' => new \Beyerz\CheckBookIOBundle\Entity\Charge(new ParameterBag([
-                    'created' => '10 Jan 2017',
                     'id' => 'e1e759e8912f4c05ae1b414fe4509f8d',
+                    'token' => null,
+                    'created' => '10 Jan 2017',
                     'message' => 'Transaction successful',
                     'status' => 'SUCCESS',
+                    'error' => 'no errors',
                 ]))
             ]
         ];
