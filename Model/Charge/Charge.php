@@ -37,6 +37,8 @@ class Charge
     public function charge(ChargeEntity $entity)
     {
         $response = $this->gateway->post(self::URI_CHARGE_CHECK, $entity);
-        return new \Beyerz\CheckBookIOBundle\Entity\Charge($response->getBody());
+        $body = $response->getBody();
+        $body->add(['token'=>$entity->getToken()]);
+        return new \Beyerz\CheckBookIOBundle\Entity\Charge($body);
     }
 }

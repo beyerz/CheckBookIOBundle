@@ -23,8 +23,8 @@ class ChargeCommand extends ContainerAwareCommand
     {
         $this->setName('checkbook:check:charge')
             ->setDescription("Cancel an existing check")
-            ->addArgument('token', InputOption::VALUE_REQUIRED, 'Tranaction token')
-            ->addArgument('amount', InputOption::VALUE_REQUIRED, 'Tranaction amount')
+            ->addArgument('token', InputOption::VALUE_REQUIRED, 'Transaction token')
+            ->addArgument('amount', InputOption::VALUE_REQUIRED, 'Transaction amount')
             ->setHelp(<<<'EOF'
             The <info>%command.name%</info> command is used to charge a check that has been processed by the embedded html form
 EOF
@@ -40,11 +40,6 @@ EOF
         $entity->setAmount($input->getArgument('amount'))
             ->setToken($input->getArgument('token'));
         $charge = $checkbook->charge()->charge($entity);
-
-        if($charge->getStatus() == "FAILURE") {
-            $io->error($charge->getMessage());
-            exit(1);
-        }
 
         $serialized = $charge->serialize();
         $headers = array_keys($serialized);

@@ -13,10 +13,17 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Charge
 {
+    const DATE_FORMAT = 'd M Y';
+
     /**
      * @var string
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $token;
 
     /**
      * @var \DateTime
@@ -34,15 +41,24 @@ class Charge
     private $message;
 
     /**
+     * @var string
+     */
+    private $error;
+
+    /**
      * Check constructor.
      * @param ParameterBag $parameters
      */
     public function __construct(ParameterBag $parameters)
     {
         $this->setId($parameters->get('id'))
-            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $parameters->get('created')))
+            ->setToken($parameters->get('token'))
             ->setStatus($parameters->get('status'))
-            ->setMessage($parameters->get('message'));
+            ->setMessage($parameters->get('message'))
+            ->setError($parameters->get('error', 'no errors'));
+        if($parameters->get('status') == "SUCCESS") {
+            $this->setDate(\DateTime::createFromFormat(self::DATE_FORMAT, $parameters->get('created')));
+        }
     }
 
     /**
@@ -60,6 +76,24 @@ class Charge
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return Charge
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
         return $this;
     }
 
@@ -117,13 +151,33 @@ class Charge
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param string $error
+     * @return Charge
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+        return $this;
+    }
+
     public function serialize()
     {
         return [
+            'token'         => $this->getToken(),
             'id'            => $this->getId(),
-            'created'          => $this->getDate()->format('Y-m-d H:i:s'),
+            'created'       => ($this->getDate() instanceof \DateTime)?$this->getDate()->format(self::DATE_FORMAT):$this->getDate(),
             'status'        => $this->getStatus(),
-            'message'          => $this->getMessage(),
+            'message'       => $this->getMessage(),
+            'error'         => $this->getError(),
         ];
     }
 }
