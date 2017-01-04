@@ -39,12 +39,17 @@ EOF
         $entity = new ChargeEntity();
         $entity->setAmount($input->getArgument('amount'))
             ->setToken($input->getArgument('token'));
-        $result = $checkbook->charge()->charge($entity);
-        if($result->getBody()['status'] == "FAILURE") {
-            $io->error($result->getBody()['error']);
+        $charge = $checkbook->charge()->charge($entity);
+
+        if($charge->getStatus() == "FAILURE") {
+            $io->error($charge->getMessage());
             exit(1);
         }
-        $io->success('SUCCESS!');
+
+        $serialized = $charge->serialize();
+        $headers = array_keys($serialized);
+        $io->table($headers, [$serialized]);
+        $io->success('done');
         exit(0);
     }
 }

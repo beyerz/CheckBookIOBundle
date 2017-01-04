@@ -30,11 +30,13 @@ class Charge
         $this->gateway = $gateway;
     }
 
+    /**
+     * @param ChargeEntity $entity
+     * @return \Beyerz\CheckBookIOBundle\Entity\Charge
+     */
     public function charge(ChargeEntity $entity)
     {
         $response = $this->gateway->post(self::URI_CHARGE_CHECK, $entity);
-        var_dump($response->getHeaders());
-        var_dump($response->getBody());
-        return $response;
+        return new \Beyerz\CheckBookIOBundle\Entity\Charge($response->getBody());
     }
 }
