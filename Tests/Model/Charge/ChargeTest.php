@@ -6,7 +6,7 @@
  * Time: 11:39
  */
 
-namespace Beyerz\CheckBookIOBundle\Tests\Model\Oauth;
+namespace Beyerz\CheckBookIOBundle\Tests\Model\Charge;
 
 
 use Beyerz\CheckBookIOBundle\Gateway\ChargeGateway;
@@ -97,8 +97,9 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
     {
         $client = $this->getClientMock();
         return $this->getMockBuilder(ChargeGateway::class)
-            ->setMethods(null)
+            ->setMethods(['getPrivateKey'])
             ->setConstructorArgs([$client])
             ->getMock();
+        $client->expects($this->any())->method('getPrivateKey')->willReturn('432g432t43t42g24g524h254g');
     }
 }

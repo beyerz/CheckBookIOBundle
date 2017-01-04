@@ -15,8 +15,12 @@ use \GuzzleHttp\Psr7\Response as Psr7Response;
 class ChargeGateway extends UrlEncodedGateway
 {
     protected function body(\JsonSerializable $entity){
-        $key = $this->container->getParameter('beyerz.checkbook.private_key');
+        $key = $this->getPrivateKey();
         $body = http_build_query(array_merge($entity->jsonSerialize(),['key' => $key]));
         return ['body' => $body];
+    }
+
+    public function getPrivateKey(){
+        return $this->container->getParameter('beyerz.checkbook.private_key');
     }
 }

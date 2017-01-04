@@ -1,5 +1,6 @@
+[![Packagist](https://img.shields.io/packagist/v/beyerz/check-book-io-bundle.svg)](https://packagist.org/packages/beyerz/check-book-io-bundle)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%205.5-8892BF.svg?style=flat-square)](https://php.net/)
 [![Build Status](https://travis-ci.org/beyerz/CheckBookIOBundle.svg?branch=master)](https://travis-ci.org/beyerz/CheckBookIOBundle)
-[![Build Status](https://travis-ci.org/beyerz/CheckBookIOBundle.svg?branch=1.0.1)](https://travis-ci.org/beyerz/CheckBookIOBundle)
 # CheckBookIOBundle
 The CheckBookIOBundle provides symfony support for [checkbook.io](https://www.checkbook.io/) API.
 
