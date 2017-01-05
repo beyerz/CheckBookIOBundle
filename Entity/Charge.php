@@ -26,6 +26,11 @@ class Charge
     private $token;
 
     /**
+     * @var string
+     */
+    private $checkId;
+
+    /**
      * @var \DateTime
      */
     private $date;
@@ -52,6 +57,7 @@ class Charge
     public function __construct(ParameterBag $parameters)
     {
         $this->setId($parameters->get('id'))
+            ->setCheckId($parameters->get('check_id'))
             ->setToken($parameters->get('token'))
             ->setStatus($parameters->get('status'))
             ->setMessage($parameters->get('message'))
@@ -94,6 +100,24 @@ class Charge
     public function setToken($token)
     {
         $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCheckId()
+    {
+        return $this->checkId;
+    }
+
+    /**
+     * @param string $checkId
+     * @return Charge
+     */
+    public function setCheckId($checkId)
+    {
+        $this->checkId = $checkId;
         return $this;
     }
 
@@ -174,6 +198,7 @@ class Charge
         return [
             'token'         => $this->getToken(),
             'id'            => $this->getId(),
+            'check_id'      => $this->getCheckId(),
             'created'       => ($this->getDate() instanceof \DateTime)?$this->getDate()->format(self::DATE_FORMAT):$this->getDate(),
             'status'        => $this->getStatus(),
             'message'       => $this->getMessage(),

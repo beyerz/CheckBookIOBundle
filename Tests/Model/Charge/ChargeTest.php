@@ -49,6 +49,7 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
                 'expects' => new \Beyerz\CheckBookIOBundle\Entity\Charge(new ParameterBag([
                     'id' => 'e1e759e8912f4c05ae1b414fe4509f8d',
                     'token' => null,
+                    'check_id' => '213rfr243f12f433f3',
                     'created' => '10 Jan 2017',
                     'message' => 'Transaction successful',
                     'status' => 'SUCCESS',
@@ -87,7 +88,7 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
                         0 => 'keep-alive',
                     ),
             ],
-                '{"created": "10 Jan 2017","id": "e1e759e8912f4c05ae1b414fe4509f8d","message": "Transaction successful","status": "SUCCESS"}',
+                '{"created": "10 Jan 2017","id": "e1e759e8912f4c05ae1b414fe4509f8d","check_id":"213rfr243f12f433f3","message": "Transaction successful","status": "SUCCESS"}',
                 '1.1',
                 'OK')
         ]);
