@@ -99,10 +99,11 @@ class ChargeTest extends \PHPUnit_Framework_TestCase
     private function getGatewayMock()
     {
         $client = $this->getClientMock();
-        return $this->getMockBuilder(ChargeGateway::class)
+        $gateway = $this->getMockBuilder(ChargeGateway::class)
             ->setMethods(['getPrivateKey'])
             ->setConstructorArgs([$client])
             ->getMock();
-        $client->expects($this->any())->method('getPrivateKey')->willReturn('432g432t43t42g24g524h254g');
+        $gateway->expects($this->any())->method('getPrivateKey')->willReturn('mock_private_key');
+        return $gateway;
     }
 }

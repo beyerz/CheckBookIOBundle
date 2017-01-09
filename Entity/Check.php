@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 
 class Check
 {
+    const DATE_FORMAT_NEW = 'Y-m-d H:i:s.u';
+    const DATE_FORMAT_OLD = 'Y-m-d H:i:s';
+    const DATE_DISPLAY_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var string
      */
@@ -70,7 +74,6 @@ class Check
     public function __construct(ParameterBag $parameters)
     {
         $this->setId($parameters->get('id'))
-            ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s.u', $parameters->get('date')))
             ->setCheckNum($parameters->get('check_num'))
             ->setDescription($parameters->get('description'))
             ->setStatus($parameters->get('status'))
@@ -79,6 +82,8 @@ class Check
             ->setPaid($parameters->get('paid'))
             ->setAddress($parameters->get('address'))
             ->setName($parameters->get('name'));
+        $format = strpos($parameters->get('date'),'.') == true?self::DATE_FORMAT_NEW:self::DATE_FORMAT_OLD;
+        $this->setDate(\DateTime::createFromFormat($format, $parameters->get('date')));
     }
 
     /**
@@ -265,7 +270,7 @@ class Check
     {
         return [
             'id'            => $this->getId(),
-            'date'          => $this->getDate()->format('Y-m-d H:i:s'),
+            'date'          => $this->getDate()->format(self::DATE_DISPLAY_FORMAT),
             'checkNum'      => $this->getCheckNum(),
             'description'   => $this->getDescription(),
             'status'        => $this->getStatus(),

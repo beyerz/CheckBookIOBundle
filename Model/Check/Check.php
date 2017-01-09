@@ -55,7 +55,7 @@ class Check implements OauthInterface
     }
 
     /**
-     * @return array
+     * @return \Beyerz\CheckBookIOBundle\Entity\Check[]
      */
     public function listAll()
     {

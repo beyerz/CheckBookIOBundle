@@ -78,14 +78,22 @@ class RestGateway extends Gateway
     protected function authHeader($method, $uri, $timeStamp)
     {
         $message = sprintf('%s%s%s%s', strtoupper($method), $this->client->getConfig('headers')['Accept'], $timeStamp, $uri);
-        $dig = hash_hmac('sha256', $message, $this->container->getParameter('beyerz.checkbook.private_key'), true);
+        $dig = hash_hmac('sha256', $message, $this->getPrivateKey(), true);
         $sig = base64_encode($dig);
         return [
             'headers' => [
                 'Date' => $timeStamp,
-                'Authorization' => sprintf('%s:%s', $this->container->getParameter('beyerz.checkbook.public_key'), $sig)
+                'Authorization' => sprintf('%s:%s', $this->getPublicKey(), $sig)
             ]
         ];
+    }
+
+    public function getPrivateKey(){
+        return $this->container->getParameter('beyerz.checkbook.private_key');
+    }
+
+    public function getPublicKey(){
+        return $this->container->getParameter('beyerz.checkbook.public_key');
     }
 
     protected function oauthHeader($timeStamp, Oauth $oauth)
