@@ -19,3 +19,6 @@ script: vendor/bin/simple-phpunit --coverage-text
 notifications:
   email:
     - bailz777+checkbookbundle@gmail.com
+addons:
+  code_climate:
+    repo_token: 5d6e9c95da72cf3c6942a61031627f67fcf47d1f28400181f61d5bb9ec82b49e
